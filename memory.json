@@ -1,0 +1,117 @@
+{
+  "participants": [
+    {"participant_id": "P001", "name": "יוסי לוי", "role": "מפתח Backend"},
+    {"participant_id": "P002", "name": "דנה כהן", "role": "מפתחת מסד נתונים (DB)"},
+    {"participant_id": "P003", "name": "אבי פרץ", "role": "מנהל מוצר"},
+    {"participant_id": "P004", "name": "רחל גרין", "role": "מעצבת UI/UX"},
+    {"participant_id": "P005", "name": "נועם ברק", "role": "בודק תוכנה (QA)"}
+  ],
+  "topics": [
+    {
+      "topic_id": "T001",
+      "title": "שיפור תהליך ההזמנה",
+      "keywords": ["תהליך הזמנה", "הזמנה", "טופס הזמנה", "אישור הזמנה"],
+      "related_topics": ["T002"]
+    },
+    {
+      "topic_id": "T002",
+      "title": "שדרוג מסד הנתונים",
+      "keywords": ["מסד נתונים", "שדרוג", "שדה חדש", "סכמה", "ביצועים", "דוחות"],
+      "related_topics": ["T001"]
+    },
+    {
+      "topic_id": "T003",
+      "title": "עיצוב מסך הבית",
+      "keywords": ["מסך הבית", "עיצוב", "ממשק משתמש"],
+      "related_topics": []
+    }
+  ],
+  "meetings": [
+    {
+      "meeting_id": "M001",
+      "topic_id": "T002",
+      "date": "2026-09-14",
+      "participants": ["P001", "P002", "P003"],
+      "summary": "תכנון שינוי מבנה טבלת ההזמנות במסד הנתונים.",
+      "decisions": [
+        {
+          "decision_id": "D001",
+          "subject": "מבנה טבלת ההזמנות",
+          "text": "להוסיף לטבלת ההזמנות שדה חדש של סטטוס משלוח.",
+          "status": "active"
+        }
+      ],
+      "tasks": [
+        {
+          "task_id": "TASK001",
+          "owner_id": "P002",
+          "description": "תכנון שינוי הסכמה בטבלת ההזמנות",
+          "status": "done",
+          "due_date": "2026-09-21"
+        },
+        {
+          "task_id": "TASK004",
+          "owner_id": "P001",
+          "description": "בדיקת ביצועים אחרי שינוי הסכמה",
+          "status": "open",
+          "due_date": null
+        }
+      ]
+    },
+    {
+      "meeting_id": "M002",
+      "topic_id": "T001",
+      "date": "2026-10-05",
+      "participants": ["P001", "P002", "P004"],
+      "summary": "דיון בשיפור תהליך ההזמנה ובשילוב שדה סטטוס המשלוח.",
+      "decisions": [
+        {
+          "decision_id": "D002",
+          "subject": "תהליך אישור הזמנה",
+          "text": "אישור הזמנה יתבצע בשני שלבים: אישור לקוח ואישור מנהל.",
+          "status": "active"
+        }
+      ],
+      "tasks": [
+        {
+          "task_id": "TASK002",
+          "owner_id": "P004",
+          "description": "עיצוב מסך אישור ההזמנה",
+          "status": "open",
+          "due_date": "2026-10-30"
+        },
+        {
+          "task_id": "TASK003",
+          "owner_id": "P002",
+          "description": "השלמת השדה החדש בטבלת ההזמנות",
+          "status": "open",
+          "due_date": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "meeting_id": "M003",
+      "topic_id": "T003",
+      "date": "2026-10-12",
+      "participants": ["P003", "P004"],
+      "summary": "בחירת כיוון עיצובי למסך הבית.",
+      "decisions": [
+        {
+          "decision_id": "D003",
+          "subject": "פריסת מסך הבית",
+          "text": "מסך הבית יציג קודם את ההזמנות האחרונות של המשתמש.",
+          "status": "active"
+        }
+      ],
+      "tasks": [
+        {
+          "task_id": "TASK005",
+          "owner_id": "P004",
+          "description": "הכנת סקיצה ראשונית למסך הבית",
+          "status": "done",
+          "due_date": "2026-10-19"
+        }
+      ]
+    }
+  ]
+}

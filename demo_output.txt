@@ -1,0 +1,295 @@
+הדגמת אג'נט הכנת פגישות – כל התרחישים רצים דרך אותה לולאת אג'נט
+תאריך הפגישות בהדגמה: 2026-10-27. הזיכרון בהדגמה: עותק בתיקייה runs/
+
+######################################################################
+# תרחיש 1+5: המשך ישיר של נושא קודם + משימה באיחור
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: המשך שיפור תהליך ההזמנה – בדיקת השדה החדש | משתתפים: P001, P002, P003
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "Load Memory", "reason": "על פי כללי ההחלטה, תמיד יש להתחיל בטעינת הזיכרון.", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "gemini"}
+{"step": 2, "goal": "prepare_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "נמצאו 2 נושאים: T001 (ציון 2), T002 (ציון 1)", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "prepare_meeting", "decision": "retrieve_related_meeting", "reason": "התאמה חזקה ל-T001 (תהליך הזמנה, הזמנה)", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: continuation → T001", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 4, "goal": "prepare_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "get_topic_history", "status": "ok", "result": "3 משתתפים; חדשים בנושא: ['P003']; חסרים מהפגישה הקודמת: ['P004']", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "prepare_meeting", "decision": "get_history", "reason": "לשלוף החלטות ופגישות קודמות של T001", "tool_used": "get_topic_history", "result_checked": true, "next_action": "get_topic_history", "status": "ok", "result": "1 פגישות, 1 החלטות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 6, "goal": "prepare_meeting", "decision": "get_history", "reason": "לשלוף החלטות ופגישות קודמות של T002", "tool_used": "get_topic_history", "result_checked": true, "next_action": "get_open_tasks", "status": "ok", "result": "1 פגישות, 1 החלטות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 7, "goal": "prepare_meeting", "decision": "check_open_tasks", "reason": "לבדוק אם נשארו משימות פתוחות או באיחור", "tool_used": "get_open_tasks", "result_checked": true, "next_action": "finish", "status": "ok", "result": "2 משימות פתוחות, 1 באיחור", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 8, "goal": "prepare_meeting", "decision": "generate_meeting_brief", "reason": "נאסף כל המידע הדרוש להכנה", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+הכנה לפגישה: המשך שיפור תהליך ההזמנה – בדיקת השדה החדש (2026-10-27)
+========================================
+הקשר: המשך ישיר של הנושא T001 – שיפור תהליך ההזמנה
+
+מידע קודם – שיפור תהליך ההזמנה:
+  פגישה אחרונה: M002 מ-2026-10-05 – דיון בשיפור תהליך ההזמנה ובשילוב שדה סטטוס המשלוח.
+  • החלטה D002 (2026-10-05, בתוקף): אישור הזמנה יתבצע בשני שלבים: אישור לקוח ואישור מנהל.
+
+מידע קודם – שדרוג מסד הנתונים (נושא קשור – הקשר טעון אימות):
+  פגישה אחרונה: M001 מ-2026-09-14 – תכנון שינוי מבנה טבלת ההזמנות במסד הנתונים.
+  • החלטה D001 (2026-09-14, בתוקף): להוסיף לטבלת ההזמנות שדה חדש של סטטוס משלוח.
+
+משימות פתוחות:
+  • רחל גרין – עיצוב מסך אישור ההזמנה | יעד: 2026-10-30 | סטטוס: פתוחה
+  • דנה כהן – השלמת השדה החדש בטבלת ההזמנות | יעד: 2026-10-20 | סטטוס: פתוחה
+    ← תאריך היעד חלף ואין עדכון בזיכרון. לברר סטטוס (אין להניח שהמשימה לא הושלמה).
+
+משתתפים:
+  • יוסי לוי – מפתח Backend
+  • דנה כהן – מפתחת מסד נתונים (DB)
+  • אבי פרץ – מנהל מוצר
+  ← משתתפים חדשים בנושא: אבי פרץ (מנהל מוצר) – כדאי לעדכן אותם בהחלטות הקודמות בתחילת הפגישה.
+  ← השתתפו בפגישה הקודמת ואינם ברשימה הנוכחית: רחל גרין (מעצבת UI/UX) – לוודא שמישהו יעדכן אותם.
+
+נקודות לדיון:
+  • מה הסטטוס של 'השלמת השדה החדש בטבלת ההזמנות'?
+  • האם ההחלטות בנושא 'שדרוג מסד הנתונים' משפיעות על הפגישה הזאת?
+
+שאלות מותאמות לתפקידים:
+  • למפתח Backend (יוסי לוי): האם שינוי ה-Backend תלוי בהשלמת המשימות הפתוחות?
+  • למפתחת מסד נתונים (DB) (דנה כהן): האם השינוי במסד הנתונים הושלם ונבדק?
+  • למנהל מוצר (אבי פרץ): האם סדרי העדיפויות של הנושא השתנו מאז הפגישה הקודמת?
+
+סטטוס ריצה: completed | צעדים: 8 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 2: נושא חדש עם אותם משתתפים
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: קליטת עובד חדש לצוות | משתתפים: P001, P002, P003
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "load_memory", "reason": "צריך לטעון את הזיכרון לפני כל פעולה", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 2, "goal": "prepare_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "לא נמצאו נושאים תואמים", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "prepare_meeting", "decision": "treat_as_new_topic", "reason": "לא נמצאה התאמה לאף נושא קודם", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: new", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 4, "goal": "prepare_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "finish", "status": "ok", "result": "3 משתתפים; חדשים בנושא: אין; חסרים מהפגישה הקודמת: אין", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "prepare_meeting", "decision": "generate_meeting_brief", "reason": "נאסף כל המידע הדרוש להכנה", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+הכנה לפגישה: קליטת עובד חדש לצוות (2026-10-27)
+========================================
+הקשר: נושא חדש – לא נמצאו פגישות קודמות בנושא הזה.
+המשתתפים כבר נפגשו בעבר בנושאים: שדרוג מסד הנתונים, שיפור תהליך ההזמנה. ההחלטות מנושאים אלה לא מוצגות כי אינן קשורות לנושא הנוכחי.
+
+משימות פתוחות:
+  אין משימות פתוחות רלוונטיות.
+
+משתתפים:
+  • יוסי לוי – מפתח Backend
+  • דנה כהן – מפתחת מסד נתונים (DB)
+  • אבי פרץ – מנהל מוצר
+
+נקודות לדיון:
+  • מה המטרה של הנושא החדש ומי אחראי עליו?
+
+שאלות מותאמות לתפקידים:
+  • למפתח Backend (יוסי לוי): מה נדרש מתחומך בנושא החדש, ואילו תלויות כדאי להכיר מראש?
+  • למפתחת מסד נתונים (DB) (דנה כהן): מה נדרש מתחומך בנושא החדש, ואילו תלויות כדאי להכיר מראש?
+  • למנהל מוצר (אבי פרץ): מה נדרש מתחומך בנושא החדש, ואילו תלויות כדאי להכיר מראש?
+
+סטטוס ריצה: completed | צעדים: 5 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 3: נושא חדש שקשור בעקיפין לנושא קודם
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: שיפור מהירות הדוחות למנהלים | משתתפים: P001, P003
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "Load Memory", "reason": "תמיד להתחיל בטעינת זיכרון.", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "gemini"}
+{"step": 2, "goal": "prepare_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "נמצאו 1 נושאים: T002 (ציון 1)", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "prepare_meeting", "decision": "mark_possible_relation", "reason": "התאמה חלקית בלבד ל-T002 – קשר אפשרי שדורש אימות", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: related → T002", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 4, "goal": "prepare_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "get_topic_history", "status": "ok", "result": "2 משתתפים; חדשים בנושא: אין; חסרים מהפגישה הקודמת: ['P002']", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "prepare_meeting", "decision": "get_history", "reason": "לשלוף החלטות ופגישות קודמות של T002", "tool_used": "get_topic_history", "result_checked": true, "next_action": "get_open_tasks", "status": "ok", "result": "1 פגישות, 1 החלטות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 6, "goal": "prepare_meeting", "decision": "check_open_tasks", "reason": "לבדוק אם נשארו משימות פתוחות או באיחור", "tool_used": "get_open_tasks", "result_checked": true, "next_action": "finish", "status": "ok", "result": "1 משימות פתוחות, 0 באיחור", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 7, "goal": "prepare_meeting", "decision": "generate_meeting_brief", "reason": "נאסף כל המידע הדרוש להכנה", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+הכנה לפגישה: שיפור מהירות הדוחות למנהלים (2026-10-27)
+========================================
+הקשר: ייתכן קשר עקיף לנושא T002 – שדרוג מסד הנתונים (הקשר טעון אימות)
+
+מידע קודם – שדרוג מסד הנתונים:
+  פגישה אחרונה: M001 מ-2026-09-14 – תכנון שינוי מבנה טבלת ההזמנות במסד הנתונים.
+  • החלטה D001 (2026-09-14, בתוקף): להוסיף לטבלת ההזמנות שדה חדש של סטטוס משלוח.
+
+משימות פתוחות:
+  • יוסי לוי – בדיקת ביצועים אחרי שינוי הסכמה | יעד: ללא תאריך יעד | סטטוס: פתוחה
+
+משתתפים:
+  • יוסי לוי – מפתח Backend
+  • אבי פרץ – מנהל מוצר
+  ← השתתפו בפגישה הקודמת ואינם ברשימה הנוכחית: דנה כהן (מפתחת מסד נתונים (DB)) – לוודא שמישהו יעדכן אותם.
+
+נקודות לדיון:
+  • האם הנושא הנוכחי באמת תלוי בהחלטות של 'שדרוג מסד הנתונים'?
+
+שאלות מותאמות לתפקידים:
+  • למפתח Backend (יוסי לוי): האם שינוי ה-Backend תלוי בהשלמת המשימות הפתוחות?
+  • למנהל מוצר (אבי פרץ): האם סדרי העדיפויות של הנושא השתנו מאז הפגישה הקודמת?
+
+הסתייגות: הקשר בין הנושא הקודם לנושא הנוכחי זוהה לפי התאמה חלקית ולכן טעון אימות.
+
+סטטוס ריצה: completed | צעדים: 7 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 4: הקשר לא ברור – האג'נט שואל במקום לנחש
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: מעקב אחרי השינויים בעיצוב ובביצועים | משתתפים: P002, P004
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "load_memory", "reason": "צריך לטעון את הזיכרון לפני כל פעולה", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 2, "goal": "prepare_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "נמצאו 2 נושאים: T002 (ציון 1), T003 (ציון 1)", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "prepare_meeting", "decision": "context_unclear", "reason": "תיקו בין T002 ל-T003 – אסור לנחש", "tool_used": "set_context", "result_checked": true, "next_action": "ask_user", "status": "ok", "result": "הקשר: unclear", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+❓ לא ברור לאיזה נושא קודם הפגישה שייכת. לאיזה נושא היא קשורה?
+   1. T002 – שדרוג מסד הנתונים
+   2. T003 – עיצוב מסך הבית
+   3. נושא חדש
+   ← המשתמש בחר: 1. T002 – שדרוג מסד הנתונים
+{"step": 4, "goal": "prepare_meeting", "decision": "ask_clarification", "reason": "ההקשר לא ברור – מבקשים מהמשתמש לבחור", "tool_used": "ask_user", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "תשובת המשתמש: T002 – שדרוג מסד הנתונים", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "prepare_meeting", "decision": "retrieve_related_meeting", "reason": "המשתמש בחר בנושא T002", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: continuation → T002", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 6, "goal": "prepare_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "get_topic_history", "status": "ok", "result": "2 משתתפים; חדשים בנושא: ['P004']; חסרים מהפגישה הקודמת: ['P001', 'P003']", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 7, "goal": "prepare_meeting", "decision": "get_history", "reason": "לשלוף החלטות ופגישות קודמות של T002", "tool_used": "get_topic_history", "result_checked": true, "next_action": "get_open_tasks", "status": "ok", "result": "1 פגישות, 1 החלטות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 8, "goal": "prepare_meeting", "decision": "check_open_tasks", "reason": "לבדוק אם נשארו משימות פתוחות או באיחור", "tool_used": "get_open_tasks", "result_checked": true, "next_action": "finish", "status": "ok", "result": "1 משימות פתוחות, 0 באיחור", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 9, "goal": "prepare_meeting", "decision": "generate_meeting_brief", "reason": "נאסף כל המידע הדרוש להכנה", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+הכנה לפגישה: מעקב אחרי השינויים בעיצוב ובביצועים (2026-10-27)
+========================================
+הקשר: המשך ישיר של הנושא T002 – שדרוג מסד הנתונים
+
+מידע קודם – שדרוג מסד הנתונים:
+  פגישה אחרונה: M001 מ-2026-09-14 – תכנון שינוי מבנה טבלת ההזמנות במסד הנתונים.
+  • החלטה D001 (2026-09-14, בתוקף): להוסיף לטבלת ההזמנות שדה חדש של סטטוס משלוח.
+
+משימות פתוחות:
+  • יוסי לוי – בדיקת ביצועים אחרי שינוי הסכמה | יעד: ללא תאריך יעד | סטטוס: פתוחה
+
+משתתפים:
+  • דנה כהן – מפתחת מסד נתונים (DB)
+  • רחל גרין – מעצבת UI/UX
+  ← משתתפים חדשים בנושא: רחל גרין (מעצבת UI/UX) – כדאי לעדכן אותם בהחלטות הקודמות בתחילת הפגישה.
+  ← השתתפו בפגישה הקודמת ואינם ברשימה הנוכחית: יוסי לוי (מפתח Backend), אבי פרץ (מנהל מוצר) – לוודא שמישהו יעדכן אותם.
+
+נקודות לדיון:
+  • אין נקודות פתוחות מהעבר.
+
+שאלות מותאמות לתפקידים:
+  • למפתחת מסד נתונים (DB) (דנה כהן): האם השינוי במסד הנתונים הושלם ונבדק?
+  • למעצבת UI/UX (רחל גרין): האם השינוי משפיע על חוויית המשתמש?
+
+סטטוס ריצה: completed | צעדים: 9 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 7: שינוי במשתתפים
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: המשך שדרוג מסד הנתונים | משתתפים: P002, P005
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "load_memory", "reason": "צריך לטעון את הזיכרון לפני כל פעולה", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 2, "goal": "prepare_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "נמצאו 1 נושאים: T002 (ציון 2)", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "prepare_meeting", "decision": "retrieve_related_meeting", "reason": "התאמה חזקה ל-T002 (מסד נתונים, שדרוג)", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: continuation → T002", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 4, "goal": "prepare_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "get_topic_history", "status": "ok", "result": "2 משתתפים; חדשים בנושא: ['P005']; חסרים מהפגישה הקודמת: ['P001', 'P003']", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "prepare_meeting", "decision": "get_history", "reason": "לשלוף החלטות ופגישות קודמות של T002", "tool_used": "get_topic_history", "result_checked": true, "next_action": "get_open_tasks", "status": "ok", "result": "1 פגישות, 1 החלטות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 6, "goal": "prepare_meeting", "decision": "check_open_tasks", "reason": "לבדוק אם נשארו משימות פתוחות או באיחור", "tool_used": "get_open_tasks", "result_checked": true, "next_action": "finish", "status": "ok", "result": "1 משימות פתוחות, 0 באיחור", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 7, "goal": "prepare_meeting", "decision": "generate_meeting_brief", "reason": "נאסף כל המידע הדרוש להכנה", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+הכנה לפגישה: המשך שדרוג מסד הנתונים (2026-10-27)
+========================================
+הקשר: המשך ישיר של הנושא T002 – שדרוג מסד הנתונים
+
+מידע קודם – שדרוג מסד הנתונים:
+  פגישה אחרונה: M001 מ-2026-09-14 – תכנון שינוי מבנה טבלת ההזמנות במסד הנתונים.
+  • החלטה D001 (2026-09-14, בתוקף): להוסיף לטבלת ההזמנות שדה חדש של סטטוס משלוח.
+
+משימות פתוחות:
+  • יוסי לוי – בדיקת ביצועים אחרי שינוי הסכמה | יעד: ללא תאריך יעד | סטטוס: פתוחה
+
+משתתפים:
+  • דנה כהן – מפתחת מסד נתונים (DB)
+  • נועם ברק – בודק תוכנה (QA)
+  ← משתתפים חדשים בנושא: נועם ברק (בודק תוכנה (QA)) – כדאי לעדכן אותם בהחלטות הקודמות בתחילת הפגישה.
+  ← השתתפו בפגישה הקודמת ואינם ברשימה הנוכחית: יוסי לוי (מפתח Backend), אבי פרץ (מנהל מוצר) – לוודא שמישהו יעדכן אותם.
+
+נקודות לדיון:
+  • אין נקודות פתוחות מהעבר.
+
+שאלות מותאמות לתפקידים:
+  • למפתחת מסד נתונים (DB) (דנה כהן): האם השינוי במסד הנתונים הושלם ונבדק?
+  • לבודק תוכנה (QA) (נועם ברק): אילו בדיקות נדרשות לפני שהשינוי ייכנס לשימוש?
+
+סטטוס ריצה: completed | צעדים: 7 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 6: סיכום אחרי פגישה – החלטה שסותרת החלטה קודמת + עדכון זיכרון
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: summarize_meeting | נושא: המשך שיפור תהליך ההזמנה | משתתפים: P001, P002, P004
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "summarize_meeting", "decision": "load_memory", "reason": "צריך לטעון את הזיכרון לפני כל פעולה", "tool_used": "load_memory", "result_checked": true, "next_action": "search_topics", "status": "ok", "result": "נטען: 3 פגישות, 3 נושאים", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 2, "goal": "summarize_meeting", "decision": "search_related_topics", "reason": "לבדוק אם הנושא כבר נדון בעבר", "tool_used": "search_topics", "result_checked": true, "next_action": "set_context", "status": "ok", "result": "נמצאו 1 נושאים: T001 (ציון 2)", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 3, "goal": "summarize_meeting", "decision": "retrieve_related_meeting", "reason": "התאמה חזקה ל-T001 (תהליך הזמנה, הזמנה)", "tool_used": "set_context", "result_checked": true, "next_action": "check_participants", "status": "ok", "result": "הקשר: continuation → T001", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 4, "goal": "summarize_meeting", "decision": "check_participants", "reason": "להתאים את ההכנה למשתתפים בפועל", "tool_used": "check_participants", "result_checked": true, "next_action": "extract_summary", "status": "ok", "result": "3 משתתפים; חדשים בנושא: אין; חסרים מהפגישה הקודמת: אין", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 5, "goal": "summarize_meeting", "decision": "extract_summary", "reason": "לחלץ החלטות ומשימות מהסיכום", "tool_used": "extract_summary", "result_checked": true, "next_action": "check_conflicts", "status": "ok", "result": "חולצו 2 החלטות, 2 משימות, 1 עדכונים (rules (Gemini נכשל: ClientError))", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 6, "goal": "summarize_meeting", "decision": "check_conflicts", "reason": "לבדוק סתירה מול החלטות קודמות בנושא", "tool_used": "check_conflicts", "result_checked": true, "next_action": "ask_user", "status": "ok", "result": "נמצאו 1 סתירות", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+❓ ההחלטה החדשה סותרת החלטה קודמת. האם מדובר בשינוי מכוון?
+   1. כן – זה שינוי מכוון, לעדכן את ההחלטה
+   2. לא – לשמור את ההחלטה החדשה כממתינה לבירור
+   ← המשתמש בחר: 1. כן – זה שינוי מכוון, לעדכן את ההחלטה
+{"step": 7, "goal": "summarize_meeting", "decision": "ask_conflict_confirmation", "reason": "נמצאה סתירה – לא דורסים בלי אישור", "tool_used": "ask_user", "result_checked": true, "next_action": "save_meeting", "status": "ok", "result": "תשובת המשתמש: כן – זה שינוי מכוון, לעדכן את ההחלטה", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 8, "goal": "summarize_meeting", "decision": "update_memory", "reason": "המידע חולץ ונבדק – אפשר לשמור", "tool_used": "save_meeting", "result_checked": true, "next_action": "verify_saved", "status": "ok", "result": "נשמרה פגישה M004", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 9, "goal": "summarize_meeting", "decision": "verify_memory", "reason": "לוודא שהשמירה באמת הצליחה", "tool_used": "verify_saved", "result_checked": true, "next_action": "finish", "status": "ok", "result": "השמירה אומתה", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+{"step": 10, "goal": "summarize_meeting", "decision": "finish_summary", "reason": "הזיכרון עודכן ונבדק", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: Gemini לא זמין בריצה הזאת)"}
+
+--- פלט ---
+סיכום ועדכון זיכרון: המשך שיפור תהליך ההזמנה (2026-10-27)
+========================================
+שויך לנושא: T001 (continuation)
+
+החלטות:
+  • [תהליך אישור הזמנה] אישור הזמנה יתבצע בשלב אחד בלבד, ללא אישור מנהל.
+  • [בדיקות לפני שילוב] נדרש לבצע בדיקה לפני שילוב השדה החדש בתהליך ההזמנה.
+  ! סתירה: 'אישור הזמנה יתבצע בשלב אחד בלבד, ללא אישור מנהל.' מול החלטה D002 מ-2026-10-05: 'אישור הזמנה יתבצע בשני שלבים: אישור לקוח ואישור מנהל.'
+    ← המשתמש אישר שזה שינוי מכוון; ההחלטה הקודמת סומנה כמוחלפת.
+
+משימות חדשות:
+  אחראי        | משימה                              | יעד        | סטטוס
+  דנה כהן      | בדיקת השדה החדש במסד הנתונים       | 2026-11-03 | פתוחה
+  יוסי לוי     | בדיקת השילוב ב-Backend             | —          | פתוחה
+
+עדכוני משימות קיימות (לפי מה שנאמר בסיכום):
+  • TASK003 → done
+
+שינויים בזיכרון:
+  • נוספה פגישה חדשה M004
+  • נוספו 2 משימות
+  • ההחלטה D002 סומנה כמוחלפת ב-D004 (באישור המשתמש)
+  • סטטוס TASK003 עודכן: open ← done (לפי הסיכום)
+
+סטטוס העדכון: נשמר ואומת (הקובץ נקרא מחדש מהדיסק ונבדק).
+
+סטטוס ריצה: completed | צעדים: 10 | סיבת עצירה: finished
+
+######################################################################
+# תרחיש 8: קובץ זיכרון פגום
+######################################################################
+מצב הפעלה: מצב Gemini (gemini-2.5-flash)
+מטרה: prepare_meeting | נושא: המשך שיפור תהליך ההזמנה | משתתפים: P001, P002
+
+--- יומן החלטות (שלב אחר שלב) ---
+{"step": 1, "goal": "prepare_meeting", "decision": "load_memory", "reason": "צריך לטעון את הזיכרון לפני כל פעולה", "tool_used": "load_memory", "result_checked": true, "next_action": "finish", "status": "error", "result": "שגיאה: קובץ הזיכרון פגום (JSON לא תקין, שורה 7): memory_corrupt.json", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+{"step": 2, "goal": "prepare_meeting", "decision": "stop_on_error", "reason": "הזיכרון פגום – עוצרים בלי לכתוב כדי לא לפגוע בנתונים", "tool_used": "finish", "result_checked": true, "next_action": null, "status": "ok", "result": "המטרה הושגה או שאי אפשר להמשיך", "brain": "rules (גיבוי: קריאה ל-Gemini נכשלה: ClientError)"}
+
+--- פלט ---
+שגיאה: לא ניתן היה לטעון את הזיכרון.
+פירוט: קובץ הזיכרון פגום (JSON לא תקין, שורה 7): memory_corrupt.json
+לא בוצעה שום כתיבה לקובץ, כדי לא לפגוע במידע הקיים. יש לתקן את הקובץ או לשחזר מגיבוי (.bak).
+
+סטטוס ריצה: failed | צעדים: 2 | סיבת עצירה: finished

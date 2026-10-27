@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אג'נט הכנת פגישות</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --card: #ffffff; --ink: #1d2433; --muted: #657085; --line: #e2e6ee;
+    --accent: #2f5bd3; --accent-soft: #e9efff; --ok: #1f8a54; --ok-soft: #e6f5ec;
+    --warn: #b26b00; --warn-soft: #fff4e0; --bad: #c0392b; --bad-soft: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", "Rubik", Arial, sans-serif; background: var(--bg); color: var(--ink); }
+  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 14px 24px;
+           display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .mode { font-size: 12px; padding: 5px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+  .mode.rules { background: var(--warn-soft); color: var(--warn); }
+  main { display: grid; grid-template-columns: 380px 1fr; gap: 18px; padding: 18px 24px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 12px 16px; } }
+  main > *, .step > div { min-width: 0; }
+  .report, .result, .reason, .note { overflow-wrap: anywhere; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .card h2 { font-size: 15px; margin: 0 0 12px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 5px; }
+  input[type=text], input[type=date], textarea { width: 100%; padding: 9px 10px; border: 1px solid var(--line);
+      border-radius: 8px; font: inherit; font-size: 14px; background: #fff; color: var(--ink); }
+  textarea { min-height: 150px; resize: vertical; direction: rtl; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .seg button { flex: 1; border: 0; background: #fff; padding: 9px; font: inherit; font-size: 13px; cursor: pointer; color: var(--muted); }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .people { display: grid; gap: 6px; }
+  .person { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+  .person small { color: var(--muted); }
+  .row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .btn { border: 0; border-radius: 8px; padding: 10px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+  .btn.primary { background: var(--accent); color: #fff; flex: 1; font-weight: 600; }
+  .btn.primary:disabled { opacity: .55; cursor: default; }
+  .btn.ghost { background: #fff; border: 1px solid var(--line); color: var(--ink); }
+  .check { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-top: 12px; }
+  .scenarios { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 11px; font-size: 12.5px; cursor: pointer; color: var(--ink); font-family: inherit; }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .right { display: grid; gap: 18px; align-content: start; }
+  .empty { color: var(--muted); font-size: 14px; text-align: center; padding: 30px 10px; }
+  .steps { display: grid; gap: 8px; }
+  .step { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+  .num { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .step.rejected { border-color: #f2c48d; background: var(--warn-soft); }
+  .step.rejected .num { background: #fff; color: var(--warn); }
+  .step.error { border-color: #f1b0a8; background: var(--bad-soft); }
+  .step.error .num { background: #fff; color: var(--bad); }
+  .step-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tool { font-family: Consolas, monospace; font-size: 12px; background: #eef1f6; padding: 2px 7px; border-radius: 6px; direction: ltr; }
+  .brain { font-size: 11px; color: var(--muted); margin-inline-start: auto; }
+  .reason { font-size: 13.5px; margin-top: 4px; }
+  .result { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .result b { color: var(--ink); font-weight: 600; }
+  .note { font-size: 13px; color: var(--muted); padding: 4px 2px; }
+  .question { border: 2px solid var(--accent); background: var(--accent-soft); border-radius: 12px; padding: 14px; }
+  .question p { margin: 0 0 10px; font-weight: 600; }
+  .question .opts { display: grid; gap: 6px; }
+  .question button { text-align: right; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font: inherit; cursor: pointer; }
+  .question button:hover { border-color: var(--accent); }
+  .status { display: inline-block; font-size: 12px; padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+  .status.completed { background: var(--ok-soft); color: var(--ok); }
+  .status.failed { background: var(--bad-soft); color: var(--bad); }
+  .status.needs_clarification, .status.stopped_limit, .status.running, .status.waiting { background: var(--warn-soft); color: var(--warn); }
+  .report { white-space: pre-wrap; font-size: 14px; line-height: 1.75; margin: 10px 0 0; font-family: inherit; }
+  .meta { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  dialog { border: 0; border-radius: 12px; padding: 0; width: min(800px, 92vw); }
+  dialog pre { margin: 0; padding: 16px; max-height: 70vh; overflow: auto; direction: ltr; text-align: left; font-size: 12px; background: #0f1420; color: #d8dee9; }
+  dialog .bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; }
+  .err { color: var(--bad); font-size: 13px; margin-top: 8px; min-height: 1em; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>אג'נט הכנת פגישות</h1>
+    <p>הכנה לפני פגישה, וסיכום ועדכון זיכרון אחריה – כל צעד של האג'נט מוצג בזמן אמת</p>
+  </div>
+  <span id="mode" class="mode">טוען…</span>
+</header>
+
+<main>
+  <section class="card">
+    <h2>תרחישי הדגמה</h2>
+    <div id="scenarios" class="scenarios"></div>
+
+    <h2 style="margin-top:20px">הגדרת הריצה</h2>
+    <div class="seg" id="goalSeg">
+      <button data-goal="prepare_meeting" class="on">הכנה לפני פגישה</button>
+      <button data-goal="summarize_meeting">סיכום אחרי פגישה</button>
+    </div>
+
+    <label for="topic">נושא הפגישה</label>
+    <input id="topic" type="text" placeholder="לדוגמה: המשך שיפור תהליך ההזמנה">
+
+    <label>משתתפים</label>
+    <div id="people" class="people"></div>
+
+    <label for="date">תאריך הפגישה</label>
+    <input id="date" type="date">
+
+    <div id="summaryBox" hidden>
+      <label for="summary">סיכום או תמלול הפגישה</label>
+      <textarea id="summary" placeholder="החלטה [נושא]: ...&#10;משימה: שם מלא | תיאור | YYYY-MM-DD&#10;עדכון משימה: TASK003 | done"></textarea>
+    </div>
+
+    <label class="check"><input type="checkbox" id="offline"> להריץ בלי Gemini (מוח מבוסס כללים)</label>
+    <label class="check"><input type="checkbox" id="corrupt"> להשתמש בקובץ זיכרון פגום (לבדיקת תרחיש 8)</label>
+
+    <div class="row">
+      <button id="run" class="btn primary">הפעלת האג'נט</button>
+    </div>
+    <div class="row">
+      <button id="showMem" class="btn ghost">הצגת הזיכרון</button>
+      <button id="resetMem" class="btn ghost">איפוס הזיכרון</button>
+    </div>
+    <div id="err" class="err"></div>
+  </section>
+
+  <section class="right">
+    <div class="card">
+      <h2>מהלך האג'נט <span id="runStatus"></span></h2>
+      <div id="steps" class="steps"><div class="empty">בחרו תרחיש או מלאו את הפרטים ולחצו "הפעלת האג'נט"</div></div>
+    </div>
+    <div class="card" id="reportCard" hidden>
+      <h2>הפלט</h2>
+      <pre id="report" class="report"></pre>
+      <div id="reportMeta" class="meta"></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="memDialog">
+  <div class="bar"><strong>memory.json (עותק העבודה של הדפדפן)</strong><button class="btn ghost" onclick="memDialog.close()">סגירה</button></div>
+  <pre id="memText"></pre>
+</dialog>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const STATUS_HE = { completed: "הושלם", failed: "נכשל", needs_clarification: "נדרשת הבהרה",
+                    stopped_limit: "נעצר במגבלת צעדים", running: "רץ…", waiting: "ממתין לתשובה שלך" };
+let goal = "prepare_meeting", poller = null, seen = 0, currentRun = null;
+
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function setGoal(g) {
+  goal = g;
+  document.querySelectorAll("#goalSeg button").forEach(b => b.classList.toggle("on", b.dataset.goal === g));
+  $("summaryBox").hidden = g !== "summarize_meeting";
+}
+
+async function loadMeta() {
+  const m = await (await fetch("/api/meta")).json();
+  $("mode").textContent = m.mode;
+  $("mode").classList.toggle("rules", !m.mode.includes("Gemini ("));
+  $("date").value = m.default_date;
+  $("people").innerHTML = m.participants.map(p =>
+    `<label class="person"><input type="checkbox" value="${esc(p.participant_id)}">
+       <span>${esc(p.name)} <small>· <bdi>${esc(p.role)}</bdi> · <bdi>${esc(p.participant_id)}</bdi></small></span></label>`).join("")
+    || `<div class="err">${esc(m.memory_error || "לא נמצאו משתתפים")}</div>`;
+  $("scenarios").innerHTML = "";
+  m.scenarios.forEach(s => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.textContent = s.title;
+    b.onclick = () => fillScenario(s);
+    $("scenarios").appendChild(b);
+  });
+}
+
+function fillScenario(s) {
+  setGoal(s.goal);
+  $("topic").value = s.topic;
+  $("summary").value = s.summary_text || "";
+  $("corrupt").checked = !!s.corrupt;
+  document.querySelectorAll("#people input").forEach(i => i.checked = s.participant_ids.includes(i.value));
+  $("err").textContent = "";
+}
+
+function renderEvent(text) {
+  if (text.startsWith("{")) {
+    try {
+      const s = JSON.parse(text);
+      const cls = s.status === "ok" ? "" : s.status;
+      return `<div class="step ${cls}">
+        <div class="num">${s.step}</div>
+        <div>
+          <div class="step-top"><strong>${esc(s.decision)}</strong><span class="tool">${esc(s.tool_used)}</span>
+            <span class="brain">${esc(s.brain)}</span></div>
+          <div class="reason">${esc(s.reason)}</div>
+          <div class="result"><b>תוצאה:</b> ${esc(s.result)}${s.next_action ? ` · <b>הצעד הבא:</b> <span class="tool">${esc(s.next_action)}</span>` : ""}</div>
+        </div></div>`;
+    } catch (e) { /* לא JSON – מוצג כהערה */ }
+  }
+  return `<div class="note">${esc(text)}</div>`;
+}
+
+async function poll() {
+  const r = await (await fetch(`/api/run/${currentRun}`)).json();
+  const box = $("steps");
+  if (seen === 0) box.innerHTML = "";
+  const openQ = box.querySelector(".question");
+  if (openQ && !r.question) openQ.remove();
+  for (; seen < r.events.length; seen++) box.insertAdjacentHTML("beforeend", renderEvent(r.events[seen]));
+  $("runStatus").innerHTML = `<span class="status ${r.status === "done" ? r.result.status : r.status}">${STATUS_HE[r.status === "done" ? r.result.status : r.status] || r.status}</span>`;
+
+  if (r.question && !openQ) {
+    const q = document.createElement("div");
+    q.className = "question";
+    q.innerHTML = `<p>❓ ${esc(r.question.text)}</p><div class="opts"></div>`;
+    r.question.options.forEach(o => {
+      const b = document.createElement("button");
+      b.textContent = o;
+      b.onclick = async () => {
+        q.querySelectorAll("button").forEach(x => x.disabled = true);
+        await fetch(`/api/run/${currentRun}/answer`, { method: "POST", headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify({ answer: o }) });
+      };
+      q.querySelector(".opts").appendChild(b);
+    });
+    box.appendChild(q);
+  }
+  if (r.status === "done") {
+    clearInterval(poller); poller = null;
+    $("run").disabled = false;
+    $("reportCard").hidden = false;
+    $("report").textContent = r.result.report;
+    $("reportMeta").textContent = `סטטוס: ${STATUS_HE[r.result.status] || r.result.status} · צעדים: ${r.result.steps} · סיבת עצירה: ${r.result.stop_reason}`;
+  }
+}
+
+async function run() {
+  $("err").textContent = "";
+  const body = {
+    goal, topic: $("topic").value, date: $("date").value, summary_text: $("summary").value,
+    offline: $("offline").checked, corrupt: $("corrupt").checked,
+    participant_ids: [...document.querySelectorAll("#people input:checked")].map(i => i.value),
+  };
+  if (poller) { clearInterval(poller); poller = null; }
+  $("run").disabled = true;
+  $("reportCard").hidden = true;
+  $("runStatus").innerHTML = "";
+  $("steps").innerHTML = '<div class="empty">האג\'נט מתחיל…</div>';
+  const res = await fetch("/api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await res.json();
+  if (!res.ok) {
+    $("err").textContent = data.error; $("run").disabled = false;
+    $("steps").innerHTML = '<div class="empty">הריצה לא התחילה – יש לתקן את הפרטים בטופס</div>';
+    return;
+  }
+  currentRun = data.run_id; seen = 0;
+  poller = setInterval(() => poll().catch(() => {}), 600);
+}
+
+document.querySelectorAll("#goalSeg button").forEach(b => b.onclick = () => setGoal(b.dataset.goal));
+$("run").onclick = run;
+$("showMem").onclick = async () => {
+  $("memText").textContent = JSON.stringify(await (await fetch("/api/memory")).json(), null, 2);
+  $("memDialog").showModal();
+};
+$("resetMem").onclick = async () => {
+  await fetch("/api/reset-memory", { method: "POST" });
+  $("err").textContent = "";
+  await loadMeta();
+  $("err").style.color = "var(--ok)"; $("err").textContent = "הזיכרון אופס למצב ההתחלתי.";
+  setTimeout(() => { $("err").textContent = ""; $("err").style.color = ""; }, 2500);
+};
+loadMeta();
+</script>
+</body>
+</html>
